@@ -112,7 +112,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-coin_sage_web_project/.env
+.env
 .venv
 env/
 venv/
@@ -158,4 +158,7 @@ __pycache__
 .vscode
 db_backups/
 .idea/
+encrypt_env.py
+.env.key
+.env.encrypted
 ```
