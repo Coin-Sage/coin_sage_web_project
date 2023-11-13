@@ -157,5 +157,5 @@ __pycache__
 *.env
 .vscode
 db_backups/
-
+.idea/
 ```
