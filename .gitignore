@@ -112,7 +112,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+coin_sage_web_project/.env
 .venv
 env/
 venv/
@@ -168,4 +168,7 @@ encrypt_env.py
 .env.key
 .env.encrypted
 
+
+# custom commands
+commands/umkey.py
 ```
