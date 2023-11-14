@@ -83,12 +83,12 @@ WSGI_APPLICATION = 'coin_sage_web_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+        'ENGINE': env("UM_ENGINE"),
+        'NAME': env("UM_NAME"),
+        'USER': env("UM_USER"),
+        'PASSWORD': env("UM_PASSWORD"),
+        'HOST': env("UM_HOST"),
+        'PORT': env("UM_PORT"),
     }
 }
 
