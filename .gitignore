@@ -170,5 +170,5 @@ encrypt_env.py
 
 
 # custom commands
-commands/umkey.py
+UserManagement/management/commands/umkey.py
 ```
