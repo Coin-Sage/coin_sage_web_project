@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  # Django web service
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["gunicorn", "coin_sage_web_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=${UM_NAME}
+      - POSTGRES_USER=${UM_USER}
+      - POSTGRES_PASSWORD=${UM_PASSWORD}
+
+  # PostgreSQL service
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${UM_NAME}
+      POSTGRES_USER: ${UM_USER}
+      POSTGRES_PASSWORD: ${UM_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
