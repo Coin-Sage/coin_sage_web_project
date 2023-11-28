@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 MY_APPS = [
     'UserManagement',
+    'historical_crypto_data',
+    'predictor',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -90,7 +92,16 @@ DATABASES = {
         'PASSWORD': os.getenv("UM_PASSWORD"),
         'HOST': os.getenv("UM_HOST"),
         'PORT': os.getenv("UM_PORT"),
-    }
+    },
+
+    'historical_crypto_data': {
+        'ENGINE': os.getenv("HCD_ENGINE"),
+        'NAME': os.getenv("HCD_NAME"),
+        'USER': os.getenv("HCD_USER"),
+        'PASSWORD': os.getenv("HCD_PASSWORD"),
+        'HOST': os.getenv("HCD_HOST"),
+        'PORT': os.getenv("HCD_PORT"),
+    },
 }
 
 
@@ -134,3 +145,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATABASE_ROUTERS = [
+    'historical_crypto_data.routers.HistoricalCryptoDataRouter',
+]
