@@ -9,21 +9,25 @@ def save_to_csv(dataset, filename):
 
 
 def preprocess(dataset, cfg, logger=None):
+    """
+        Preprocess the dataset based on the provided configuration.
+
+        :param dataset: The dataset to preprocess.
+        :param cfg: The configuration for preprocessing.
+        :param logger: The logger to use for error reporting.
+        :return: The preprocessed dataset and profit calculator.
+        """
     if 'Date' not in dataset.columns:
-        print("Error: Date column not found in dataset.")
-        return None
+        raise ValueError("Error: Date column not found in dataset.")
 
-    if ('train_start_date' not in cfg or 'valid_end_date' not in cfg):
-        print("Error: Invalid configuration. 'train_start_date' and 'valid_end_date' are required.")
-        return None
+    if (
+            'train_start_date' not in cfg
+            or
+            'valid_end_date' not in cfg
+    ):
+        raise ValueError("Error: Invalid configuration. 'train_start_date' and 'valid_end_date' are required.")
 
-    dataset = dataset[
-        (
-                dataset.Date > cfg.train_start_date
-        ) & (
-                dataset.Date < cfg.valid_end_date
-        )
-        ]
+    dataset = dataset[(dataset.Date > cfg.train_start_date) & (dataset.Date < cfg.valid_end_date)]
 
     features = cfg.get('features', dataset.columns)
     if isinstance(features, str):
@@ -94,6 +98,15 @@ def preprocess(dataset, cfg, logger=None):
 
 
 def create_dataset(dataset, dates, look_back, features):
+    """
+        Create a dataset based on the provided parameters.
+
+        :param dataset: The dataset to create.
+        :param dates: The dates to include in the dataset.
+        :param look_back: The look back period for the dataset.
+        :param features: The features to include in the dataset.
+        :return: The created dataset and profit calculator.
+        """
     data_x = []
     for i in range(len(dataset) - look_back - 1):
         a = dataset[i:(i + look_back), :]
@@ -108,7 +121,6 @@ def create_dataset(dataset, dates, look_back, features):
         data_x.append(b)
 
     data_x = np.array(data_x)
-    # y = data_x[:, 1:].astype(np.float)
     cols = ['Date']
     counter = 0
     counter_date = 0
@@ -157,7 +169,8 @@ def create_dataset(dataset, dates, look_back, features):
                     f'High_day{counter_date-1}': 'predicted_high',
                     f'Low_day{counter_date-1}': 'predicted_low',
                     f'mean_day{counter_date-1}': 'prediction'
-                    }, axis=1
+                    },
+        axis=1
     )
 
     profit_calculator = profit_calculator.rename(
@@ -167,7 +180,8 @@ def create_dataset(dataset, dates, look_back, features):
             f'open_day{counter_date - 1}': 'Open',
             f'close_day{counter_date - 1}': 'Close',
             f'volume_day{counter_date - 1}': 'Volume',
-        }, axis=1
+        },
+        axis=1
     )
 
     return data_frame, profit_calculator
