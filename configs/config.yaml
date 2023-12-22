@@ -1,0 +1,10 @@
+# config/config.yaml
+defaults:
+  - django_defaults
+  - _self_
+
+django:
+  debug: false
+  database:
+    engine: django.db.backends.sqlite3
+    name: mydatabase
