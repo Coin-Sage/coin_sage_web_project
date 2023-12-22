@@ -1,10 +1,10 @@
-window_size: 5
-train_start_date: 2018-10-20 13:30:00
-train_end_date: 2021-11-10 9:30:00
-valid_start_date: 2021-11-10 10:30:00
-valid_end_date: 2023-01-16 10:30:00
-features: Date, open, high, low, close, volume #make sure to have Date High Low
-indicators_names: rsi macd
+window_size: 5                                    # Number of previous days to be included in observation
+train_start_date: 2018-10-20 13:30:00             # Start date of training dataset
+train_end_date: 2021-11-10 9:30:00                # End date of training dataset
+valid_start_date: 2021-11-10 10:30:00             # Start date of validation dataset
+valid_end_date: 2023-01-16 10:30:00               # End date of validation dataset
+features: Date, open, high, low, close, volume    # Regressors you want to keep from the original dataset (depends on the dataset)
+indicators_names: rsi macd                        # Indicators you want to add to the dataset (depends on the dataset)
 
 
 #short_wma, wma, long_wma, ewma, tema, macd, stoch1, stoch2, wpr, rsi_experts, rsi, srsi, bolinger_up,
