@@ -38,7 +38,7 @@ ALLOWED_HOSTS = []
 MY_APPS = [
     'UserManagement',
     'historical_crypto_data',
-    'predictor',
+    'predictor_data_collector',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
