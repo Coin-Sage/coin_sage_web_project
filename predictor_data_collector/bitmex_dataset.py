@@ -12,6 +12,34 @@ from omegaconf import DictConfig
 
 
 class BitmexDataset:
+    """
+        A class used to represent a Bitmex Dataset
+
+        ...
+
+        Attributes
+        ----------
+        BINSIZES :
+            dict: a dictionary mapping bin sizes to their corresponding minutes
+        cfg :
+            DictConfig: the configuration for the Bitmex dataset
+        api_key :
+            str: the API key for Bitmex
+        api_secret :
+            str: the API secret for Bitmex
+        bitmex_client :
+            str: the Bitmex client
+        batch_size :
+            int: the batch size for the Bitmex dataset
+        symbol :
+            str: the symbol for the Bitmex dataset
+        bin :
+            int: the bin size for the Bitmex dataset
+        window_size :
+            int: the window size for the Bitmex dataset
+        features :
+            list: the features for the Bitmex dataset
+    """
     BINSIZES = {
         "1m": 1,
         "5m": 5,
@@ -20,6 +48,11 @@ class BitmexDataset:
     }
 
     def __init__(self, cfg: DictConfig):
+        """
+            Constructs all the necessary attributes for the BitmexDataset object.
+
+            :param cfg: DictConfig: The configuration for the Bitmex dataset
+        """
         self.cfg = cfg
         self.api_key = os.getenv('BITMEX_API_KEY')
         self.api_secret = os.getenv('BITMEX_API_SECRET')
@@ -36,6 +69,15 @@ class BitmexDataset:
     # FUNCTIONS
 
     def minutes_of_new_data(self, symbol, kline_size, data, source):
+        """
+            Calculate the minutes of new data for a given symbol and kline size.
+
+            :param symbol: The symbol to calculate the minutes of new data for.
+            :param kline_size: The kline size to calculate the minutes of new data for.
+            :param data: The existing data for the symbol.
+            :param source: The source of the data.
+            :return: The oldest and newest data points.
+        """
         if len(data) > 0:
             old = parser.parse(
                 data["timestamp"].iloc[-1]
@@ -56,6 +98,14 @@ class BitmexDataset:
         return old, new
 
     def get_all_bitmex(self, symbol, kline_size, save=False):
+        """
+            Fetch all Bitmex data for a given symbol and kline size.
+
+            :param symbol: The symbol to fetch the data for.
+            :param kline_size: The kline size to fetch the data for.
+            :param save: Whether to save the fetched data to a file.
+            :return: The fetched data.
+        """
         filename = f'{symbol}-{kline_size}-data.csv'
 
         if os.path.isfile(filename):
@@ -110,6 +160,13 @@ class BitmexDataset:
             return data
 
     def create_dataset(self, df, window_size):
+        """
+            Create a dataset with a given dataframe and window size.
+
+            :param df: The dataframe to create the dataset from.
+            :param window_size: The window size for the dataset.
+            :return: The created dataset and profit calculator.
+        """
         dates = df['Date']
         df = df.drop(
             'Date',
@@ -125,6 +182,11 @@ class BitmexDataset:
         return data, profit_calculator
 
     def get_dataset(self):
+        """
+            Fetch the dataset.
+
+            :return: The fetched dataset.
+        """
         dataset = self.get_all_bitmex(
             self.symbol,
             self.bin,
