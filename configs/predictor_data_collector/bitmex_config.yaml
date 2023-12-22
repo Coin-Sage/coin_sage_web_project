@@ -1,11 +1,11 @@
 defaults:
-  - _self_
-  - common
+  - _self_           # This is the config file for the exchange model
+  - common           # This is the common config file for all the exchange models
 
-name: 'Bitmex'
-binsize: 1d
-batch_size: 750
-symbol: "XBTUSD"
+name: 'Bitmex'       # Name of the exchange (should not be changed!)
+binsize: 1d          # Timeframe of the data (1d, 1h, 1m, 1s)
+batch_size: 750      # Number of rows to be fetched at once
+symbol: "XBTUSD"     # Symbol of the coin (XBTUSD, ETHUSD, ...)
 
 
 
