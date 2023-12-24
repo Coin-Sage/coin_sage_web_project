@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
 from dotenv import load_dotenv
 import os
 
@@ -37,8 +36,9 @@ ALLOWED_HOSTS = []
 # Application definition
 MY_APPS = [
     'UserManagement',
-    'historical_crypto_data',
+    'historical_data',
     'predictor_data_collector',
+    'test'
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,13 +94,21 @@ DATABASES = {
         'PORT': os.getenv("UM_PORT"),
     },
 
-    'historical_crypto_data': {
+    'historical_data': {
         'ENGINE': os.getenv("HCD_ENGINE"),
         'NAME': os.getenv("HCD_NAME"),
         'USER': os.getenv("HCD_USER"),
         'PASSWORD': os.getenv("HCD_PASSWORD"),
         'HOST': os.getenv("HCD_HOST"),
         'PORT': os.getenv("HCD_PORT"),
+    },
+    'test': {
+        'ENGINE': os.getenv("TEST_ENGINE"),
+        'NAME': os.getenv("TEST_NAME"),
+        'USER': os.getenv("TEST_USER"),
+        'PASSWORD': os.getenv("TEST_PASSWORD"),
+        'HOST': os.getenv("TEST_HOST"),
+        'PORT': os.getenv("TEST_PORT"),
     },
 }
 
@@ -147,5 +155,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASE_ROUTERS = [
-    'historical_crypto_data.routers.HistoricalCryptoDataRouter',
+    'historical_data.routers.HistoricalDataRouter',
 ]
